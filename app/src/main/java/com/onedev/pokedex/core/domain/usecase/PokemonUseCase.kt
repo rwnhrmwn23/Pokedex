@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 interface PokemonUseCase {
 
     fun getPokemon(limit: Int): Flow<Resource<PagedList<Pokemon>>>
-    fun getDetailPokemon(id: Int): Flow<Resource<PokemonDetailsResponse>>
+    fun getPokemonById(id: Int): Flow<Resource<Pokemon>>
     fun getPokemonFavorite(): Flow<List<Pokemon>>
-    fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean)
+    suspend fun updatePokemon(pokemon: Pokemon, state: Boolean)
 
 }

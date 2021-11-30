@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.onedev.pokedex.R
 import com.onedev.pokedex.core.data.source.Resource
 import com.onedev.pokedex.databinding.FragmentDetailAppearanceBinding
 import com.onedev.pokedex.ui.fragment.detail.viewmodel.DetailViewModel
@@ -43,7 +42,7 @@ class DetailAppearanceFragment : Fragment() {
 
     private fun loadDetailPokemon(id: Int) {
         binding?.apply {
-            detailViewModel.getPokemonDetail(id).observe(viewLifecycleOwner) { response ->
+            detailViewModel.getPokemonById(id).observe(viewLifecycleOwner) { response ->
                 if (response != null) {
                     when (response) {
                         is Resource.Loading -> {
@@ -51,8 +50,8 @@ class DetailAppearanceFragment : Fragment() {
                         }
                         is Resource.Success -> {
                             response.data?.let { dataPokemon ->
-                                tvHeight.text = dataPokemon.height.toString()
-                                tvWeight.text = dataPokemon.weight.toString()
+                                tvHeight.text = dataPokemon.pokemonHeight.toString()
+                                tvWeight.text = dataPokemon.pokemonWeight.toString()
                             }
                         }
                         is Resource.Error -> {

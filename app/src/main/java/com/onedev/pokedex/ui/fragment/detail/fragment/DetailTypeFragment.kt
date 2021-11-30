@@ -5,12 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.onedev.pokedex.R
 import com.onedev.pokedex.core.data.source.Resource
-import com.onedev.pokedex.databinding.FragmentDetailBaseStatsBinding
 import com.onedev.pokedex.databinding.FragmentDetailTypeBinding
-import com.onedev.pokedex.ui.fragment.detail.adapter.PokemonTypeAdapter
 import com.onedev.pokedex.ui.fragment.detail.viewmodel.DetailViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -46,7 +42,7 @@ class DetailTypeFragment : Fragment() {
 
     private fun loadDetailPokemon(id: Int) {
         binding?.apply {
-            detailViewModel.getPokemonDetail(id).observe(viewLifecycleOwner) { response ->
+            detailViewModel.getPokemonById(id).observe(viewLifecycleOwner) { response ->
                 if (response != null) {
                     when (response) {
                         is Resource.Loading -> {
@@ -54,13 +50,7 @@ class DetailTypeFragment : Fragment() {
                         }
                         is Resource.Success -> {
                             response.data?.let { dataPokemon ->
-                                val pokemonTypeAdapter = PokemonTypeAdapter()
-                                rvType.apply {
-                                    setHasFixedSize(true)
-                                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                                    adapter = pokemonTypeAdapter
-                                }
-                                pokemonTypeAdapter.setTypePokemon(dataPokemon.types)
+                                tvPokemonType.text = dataPokemon.pokemonType
                             }
                         }
                         is Resource.Error -> {

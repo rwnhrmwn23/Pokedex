@@ -13,6 +13,7 @@ import com.onedev.pokedex.core.domain.repository.IPokemonRepository
 import com.onedev.pokedex.utils.ExtMapper.mapDomainToEntity
 import com.onedev.pokedex.utils.ExtMapper.mapEntitiesToListDomain
 import com.onedev.pokedex.utils.ExtMapper.mapEntityToDomain
+import com.onedev.pokedex.utils.ExtMapper.mapResponsesDetailToEntities
 import com.onedev.pokedex.utils.ExtMapper.mapResponsesToEntities
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -46,22 +47,45 @@ class PokemonRepository(
                 val listPokemon = data.mapResponsesToEntities()
                 localDataSource.insertPokemon(listPokemon)
             }
-
         }.asFlow()
 
-    override fun getDetailPokemon(id: Int): Flow<Resource<PokemonDetailsResponse>> =
-        object : NetworkOnlyResource<PokemonDetailsResponse>() {
+    override fun getPokemonById(id: Int): Flow<Resource<Pokemon>> =
+        object : NetworkBoundResource<Pokemon, PokemonDetailsResponse>() {
+            override fun loadFromDB(): Flow<Pokemon> {
+                return localDataSource.getPokemonById(id).map {
+                    it.mapEntityToDomain()
+                }
+            }
+
+            override fun shouldFetch(data: Pokemon?): Boolean {
+                return data?.pokemonHeight == null ||
+                        data.pokemonWeight == null ||
+                        data.pokemonType == null ||
+                        data.pokemonHp == null ||
+                        data.pokemonAtk == null ||
+                        data.pokemonDef == null ||
+                        data.pokemonSAtk == null ||
+                        data.pokemonSDef == null ||
+                        data.pokemonSpd == null
+            }
+
             override suspend fun createCall(): Flow<ApiResponse<PokemonDetailsResponse>> {
                 return remoteDataSource.getDetailPokemon(id)
             }
+
+            override suspend fun saveCallResult(data: PokemonDetailsResponse) {
+                val pokemonEntities = data.mapResponsesDetailToEntities()
+                return localDataSource.updatePokemon(pokemonEntities, pokemonEntities.pokemonIsFavorite)
+            }
+
         }.asFlow()
 
     override fun getPokemonFavorite(): Flow<List<Pokemon>> {
         return localDataSource.getPokemonFavorite().map { it.mapEntitiesToListDomain() }
     }
 
-    override fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean) {
+    override suspend fun updatePokemon(pokemon: Pokemon, state: Boolean) {
         val pokemonEntities = pokemon.mapDomainToEntity()
-        return localDataSource.updatePokemonFavorite(pokemonEntities, state)
+        return localDataSource.updatePokemon(pokemonEntities, state)
     }
 }

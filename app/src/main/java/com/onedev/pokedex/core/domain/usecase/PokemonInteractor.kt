@@ -6,8 +6,8 @@ import com.onedev.pokedex.core.domain.repository.IPokemonRepository
 class PokemonInteractor(private val iPokemonRepository: IPokemonRepository) : PokemonUseCase {
 
     override fun getPokemon(limit: Int) = iPokemonRepository.getPokemon(limit)
-    override fun getDetailPokemon(id: Int) = iPokemonRepository.getDetailPokemon(id)
+    override fun getPokemonById(id: Int) = iPokemonRepository.getPokemonById(id)
     override fun getPokemonFavorite() = iPokemonRepository.getPokemonFavorite()
-    override fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean) = iPokemonRepository.updatePokemonFavorite(pokemon, state)
+    override suspend fun updatePokemon(pokemon: Pokemon, state: Boolean) = iPokemonRepository.updatePokemon(pokemon, state)
 
 }

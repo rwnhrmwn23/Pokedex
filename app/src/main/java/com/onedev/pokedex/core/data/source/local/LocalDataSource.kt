@@ -7,11 +7,13 @@ class LocalDataSource(private val pokemonDao: PokemonDao) {
 
     fun getPokemon() = pokemonDao.getPokemon()
 
+    fun getPokemonById(id: Int) = pokemonDao.getPokemonById(id)
+
     fun getPokemonFavorite() = pokemonDao.getPokemonFavorite()
 
-    fun updatePokemonFavorite(pokemonEntity: PokemonEntity, newState: Boolean) {
+    suspend fun updatePokemon(pokemonEntity: PokemonEntity, newState: Boolean) {
         pokemonEntity.pokemonIsFavorite = newState
-        pokemonDao.updatePokemonFavorite(pokemonEntity)
+        pokemonDao.updatePokemon(pokemonEntity)
     }
 
     suspend fun insertPokemon(pokemonEntity: List<PokemonEntity>) = pokemonDao.insertPokemon(pokemonEntity)

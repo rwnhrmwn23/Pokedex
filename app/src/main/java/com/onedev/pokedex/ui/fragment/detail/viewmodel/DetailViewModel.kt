@@ -7,6 +7,6 @@ import com.onedev.pokedex.core.domain.usecase.PokemonUseCase
 
 class DetailViewModel(private val pokemonUseCase: PokemonUseCase) : ViewModel() {
 
-    fun getPokemonDetail(id: Int) = pokemonUseCase.getDetailPokemon(id).asLiveData()
+    fun getPokemonById(id: Int) = pokemonUseCase.getPokemonById(id).asLiveData()
 
 }

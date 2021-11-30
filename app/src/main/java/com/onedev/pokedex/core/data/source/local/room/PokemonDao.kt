@@ -11,11 +11,14 @@ interface PokemonDao {
     @Query("SELECT * FROM tb_pokemon")
     fun getPokemon(): DataSource.Factory<Int, PokemonEntity>
 
+    @Query("SELECT * FROM tb_pokemon WHERE id = :id")
+    fun getPokemonById(id: Int): Flow<PokemonEntity>
+
     @Query("SELECT * FROM tb_pokemon WHERE pokemon_is_favorite = 1")
     fun getPokemonFavorite(): Flow<List<PokemonEntity>>
 
     @Update
-    fun updatePokemonFavorite(pokemonEntity: PokemonEntity)
+    suspend fun updatePokemon(pokemonEntity: PokemonEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPokemon(pokemonEntity: List<PokemonEntity>)

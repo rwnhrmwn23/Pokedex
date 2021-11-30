@@ -24,6 +24,7 @@ class DetailFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding
     private val args: DetailFragmentArgs by navArgs()
+    private val detailViewModel: DetailViewModel by viewModel()
     private var mediator: TabLayoutMediator? = null
 
     override fun onCreateView(
@@ -50,6 +51,9 @@ class DetailFragment : Fragment(), View.OnClickListener {
 
     private fun populateView(data: Pokemon) {
         binding?.apply {
+            tvPokemonId.text = getString(R.string.pokemon_id, data.id)
+            collPokemonName.title = data.pokemonName
+
             val url = data.pokemonImage
             Glide.with(requireContext())
                 .load(url)
@@ -67,16 +71,17 @@ class DetailFragment : Fragment(), View.OnClickListener {
                         }.crossfade(true)
                 ).into(imgPokemon)
 
-            tvPokemonId.text = getString(R.string.pokemon_id, data.id)
-            collPokemonName.title = data.pokemonName
-
             val viewPagerDetailHeroAdapter = PokemonDetailViewPagerAdapter(activity as AppCompatActivity, args.pokemon.id.toString())
             viewPager.adapter = viewPagerDetailHeroAdapter
-
-            mediator = TabLayoutMediator(
-                tabs, viewPager
-            ) { tab, position -> tab.text = resources.getString(TAB_TITLES[position]) }
+            mediator = TabLayoutMediator(tabs, viewPager) {
+                    tab, position -> tab.text = resources.getString(TAB_TITLES[position])
+            }
             mediator?.attach()
+
+            if (data.pokemonIsFavorite)
+                fabFavorite.setImageResource(R.drawable.pokemon_favorite)
+            else
+                fabFavorite.setImageResource(R.drawable.pokemon_not_favorite)
         }
     }
 

@@ -43,7 +43,7 @@ class DetailBaseStatsFragment : Fragment() {
 
     private fun loadDetailPokemon(id: Int) {
         binding?.apply {
-            detailViewModel.getPokemonDetail(id).observe(viewLifecycleOwner) { response ->
+            detailViewModel.getPokemonById(id).observe(viewLifecycleOwner) { response ->
                 if (response != null) {
                     when (response) {
                         is Resource.Loading -> {
@@ -51,31 +51,42 @@ class DetailBaseStatsFragment : Fragment() {
                         }
                         is Resource.Success -> {
                             response.data?.let { dataPokemon ->
-                                val dataBaseStat = dataPokemon.stats
-                                val dataStatHp = dataBaseStat[0].base_stat.toFloat()
-                                val dataStatAtk = dataBaseStat[1].base_stat.toFloat()
-                                val dataStatDef = dataBaseStat[2].base_stat.toFloat()
-                                val dataStatSAtk = dataBaseStat[3].base_stat.toFloat()
-                                val dataStatSDef = dataBaseStat[4].base_stat.toFloat()
-                                val dataStatSpd = dataBaseStat[5].base_stat.toFloat()
+                                val dataStatHp = dataPokemon.pokemonHp
+                                val dataStatAtk = dataPokemon.pokemonAtk
+                                val dataStatDef = dataPokemon.pokemonDef
+                                val dataStatSAtk = dataPokemon.pokemonSAtk
+                                val dataStatSDef = dataPokemon.pokemonSDef
+                                val dataStatSpd = dataPokemon.pokemonSpd
 
-                                statHp.progress = dataStatHp
-                                statHp.labelText = getString(R.string.stat_base, dataStatHp.toInt())
+                                if (dataStatHp != null) {
+                                    statHp.progress = dataStatHp.toFloat()
+                                    statHp.labelText = getString(R.string.stat_base, dataStatHp)
+                                }
 
-                                statAttack.progress = dataStatAtk
-                                statAttack.labelText = getString(R.string.stat_base, dataStatAtk.toInt())
+                                if (dataStatAtk != null) {
+                                    statAttack.progress = dataStatAtk.toFloat()
+                                    statAttack.labelText = getString(R.string.stat_base, dataStatAtk)
+                                }
 
-                                statDef.progress = dataStatDef
-                                statDef.labelText = getString(R.string.stat_base, dataStatDef.toInt())
+                                if (dataStatDef != null) {
+                                    statDef.progress = dataStatDef.toFloat()
+                                    statDef.labelText = getString(R.string.stat_base, dataStatDef)
+                                }
 
-                                statSAttack.progress = dataStatSAtk
-                                statSAttack.labelText = getString(R.string.stat_base, dataStatSAtk.toInt())
+                                if (dataStatSAtk != null) {
+                                    statSAttack.progress = dataStatSAtk.toFloat()
+                                    statSAttack.labelText = getString(R.string.stat_base, dataStatSAtk)
+                                }
 
-                                statSDef.progress = dataStatSDef
-                                statSDef.labelText = getString(R.string.stat_base, dataStatSDef.toInt())
+                                if (dataStatSDef != null) {
+                                    statSDef.progress = dataStatSDef.toFloat()
+                                    statSDef.labelText = getString(R.string.stat_base, dataStatSDef)
+                                }
 
-                                statSpd.progress = dataStatSpd
-                                statSpd.labelText = getString(R.string.stat_base, dataStatSpd.toInt())
+                                if (dataStatSpd != null) {
+                                    statSpd.progress = dataStatSpd.toFloat()
+                                    statSpd.labelText = getString(R.string.stat_base, dataStatSpd)
+                                }
                             }
                         }
                         is Resource.Error -> {
