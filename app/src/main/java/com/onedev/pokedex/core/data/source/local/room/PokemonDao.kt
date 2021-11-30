@@ -14,8 +14,11 @@ interface PokemonDao {
     @Query("SELECT * FROM tb_pokemon WHERE id = :id")
     fun getPokemonById(id: Int): Flow<PokemonEntity>
 
+    @Query("SELECT * FROM tb_pokemon WHERE pokemon_name LIKE '%' || :pokemonName || '%'")
+    fun getPokemonByName(pokemonName: String): DataSource.Factory<Int, PokemonEntity>
+
     @Query("SELECT * FROM tb_pokemon WHERE pokemon_is_favorite = 1")
-    fun getPokemonFavorite(): Flow<List<PokemonEntity>>
+    fun getPokemonFavorite(): DataSource.Factory<Int, PokemonEntity>
 
     @Update
     fun updatePokemonFavorite(pokemonEntity: PokemonEntity)

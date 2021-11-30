@@ -50,6 +50,16 @@ class PokemonRepository(
             }
         }.asFlow()
 
+    override fun getPokemonByName(pokemonByName: String): Flow<PagedList<Pokemon>> {
+        val data = localDataSource.getPokemonByName(pokemonByName).map { it.mapEntityToDomain() }
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(5)
+            .setPageSize(5)
+            .build()
+        return LivePagedListBuilder(data, config).build().asFlow()
+    }
+
     override fun getPokemonById(id: Int): Flow<Resource<Pokemon>> =
         object : NetworkBoundResource<Pokemon, PokemonDetailsResponse>() {
             override fun loadFromDB(): Flow<Pokemon> {
@@ -81,8 +91,14 @@ class PokemonRepository(
 
         }.asFlow()
 
-    override fun getPokemonFavorite(): Flow<List<Pokemon>> {
-        return localDataSource.getPokemonFavorite().map { it.mapEntitiesToListDomain() }
+    override fun getPokemonFavorite(): Flow<PagedList<Pokemon>> {
+        val data = localDataSource.getPokemonFavorite().map { it.mapEntityToDomain() }
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(5)
+            .setPageSize(5)
+            .build()
+        return LivePagedListBuilder(data, config).build().asFlow()
     }
 
     override fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean) {

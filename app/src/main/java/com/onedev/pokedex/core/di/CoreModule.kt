@@ -10,6 +10,7 @@ import com.onedev.pokedex.core.domain.repository.IPokemonRepository
 import com.onedev.pokedex.core.domain.usecase.PokemonInteractor
 import com.onedev.pokedex.core.domain.usecase.PokemonUseCase
 import com.onedev.pokedex.ui.fragment.detail.viewmodel.DetailViewModel
+import com.onedev.pokedex.ui.fragment.favorite.viewmodel.FavoriteViewModel
 import com.onedev.pokedex.ui.fragment.home.viewmodel.HomeViewModel
 import com.onedev.pokedex.utils.Constant.BASE_URL
 import com.onedev.pokedex.utils.Constant.DATABASE_NAME
@@ -52,5 +53,6 @@ val repositoryModule = module {
 
 val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
+    viewModel { FavoriteViewModel(get()) }
     viewModel { DetailViewModel(get()) }
 }

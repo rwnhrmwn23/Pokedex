@@ -9,6 +9,8 @@ class LocalDataSource(private val pokemonDao: PokemonDao) {
 
     fun getPokemonById(id: Int) = pokemonDao.getPokemonById(id)
 
+    fun getPokemonByName(pokemonByName: String) = pokemonDao.getPokemonByName(pokemonByName)
+
     fun getPokemonFavorite() = pokemonDao.getPokemonFavorite()
 
     fun updatePokemonFavorite(pokemonEntity: PokemonEntity, newState: Boolean) {

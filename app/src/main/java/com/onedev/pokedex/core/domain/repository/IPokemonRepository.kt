@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 interface IPokemonRepository {
 
     fun getPokemon(limit: Int): Flow<Resource<PagedList<Pokemon>>>
+    fun getPokemonByName(pokemonByName: String): Flow<PagedList<Pokemon>>
     fun getPokemonById(id: Int): Flow<Resource<Pokemon>>
-    fun getPokemonFavorite(): Flow<List<Pokemon>>
+    fun getPokemonFavorite(): Flow<PagedList<Pokemon>>
     fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean)
 
 }

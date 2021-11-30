@@ -23,4 +23,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="success_add_fav">Success Add to Favorite</string>
     <string name="success_remove_fav">Success Remove from Favorite</string>
+    <string name="pokemon_not_found">Pokemon Tidak Ditemukan</string>
+    <string name="search">Search</string>
+    <string name="search_pokemon">Search Pokemon</string>
 </resources>
