@@ -21,4 +21,6 @@
     <string name="spd">SPD</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="success_add_fav">Success Add to Favorite</string>
+    <string name="success_remove_fav">Success Remove from Favorite</string>
 </resources>

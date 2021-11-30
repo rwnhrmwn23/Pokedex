@@ -11,8 +11,12 @@ class LocalDataSource(private val pokemonDao: PokemonDao) {
 
     fun getPokemonFavorite() = pokemonDao.getPokemonFavorite()
 
-    suspend fun updatePokemon(pokemonEntity: PokemonEntity, newState: Boolean) {
+    fun updatePokemonFavorite(pokemonEntity: PokemonEntity, newState: Boolean) {
         pokemonEntity.pokemonIsFavorite = newState
+        pokemonDao.updatePokemonFavorite(pokemonEntity)
+    }
+
+    suspend fun updatePokemon(pokemonEntity: PokemonEntity) {
         pokemonDao.updatePokemon(pokemonEntity)
     }
 

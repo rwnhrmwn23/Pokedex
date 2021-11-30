@@ -8,6 +8,6 @@ class PokemonInteractor(private val iPokemonRepository: IPokemonRepository) : Po
     override fun getPokemon(limit: Int) = iPokemonRepository.getPokemon(limit)
     override fun getPokemonById(id: Int) = iPokemonRepository.getPokemonById(id)
     override fun getPokemonFavorite() = iPokemonRepository.getPokemonFavorite()
-    override suspend fun updatePokemon(pokemon: Pokemon, state: Boolean) = iPokemonRepository.updatePokemon(pokemon, state)
+    override fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean) = iPokemonRepository.updatePokemonFavorite(pokemon, state)
 
 }

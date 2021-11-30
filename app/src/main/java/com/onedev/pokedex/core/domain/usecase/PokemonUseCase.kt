@@ -11,6 +11,6 @@ interface PokemonUseCase {
     fun getPokemon(limit: Int): Flow<Resource<PagedList<Pokemon>>>
     fun getPokemonById(id: Int): Flow<Resource<Pokemon>>
     fun getPokemonFavorite(): Flow<List<Pokemon>>
-    suspend fun updatePokemon(pokemon: Pokemon, state: Boolean)
+    fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean)
 
 }

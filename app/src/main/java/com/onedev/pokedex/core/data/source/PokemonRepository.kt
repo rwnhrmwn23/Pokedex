@@ -16,6 +16,7 @@ import com.onedev.pokedex.utils.ExtMapper.mapEntityToDomain
 import com.onedev.pokedex.utils.ExtMapper.mapResponsesDetailToEntities
 import com.onedev.pokedex.utils.ExtMapper.mapResponsesToEntities
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class PokemonRepository(
@@ -75,7 +76,7 @@ class PokemonRepository(
 
             override suspend fun saveCallResult(data: PokemonDetailsResponse) {
                 val pokemonEntities = data.mapResponsesDetailToEntities()
-                return localDataSource.updatePokemon(pokemonEntities, pokemonEntities.pokemonIsFavorite)
+                return localDataSource.updatePokemon(pokemonEntities)
             }
 
         }.asFlow()
@@ -84,8 +85,8 @@ class PokemonRepository(
         return localDataSource.getPokemonFavorite().map { it.mapEntitiesToListDomain() }
     }
 
-    override suspend fun updatePokemon(pokemon: Pokemon, state: Boolean) {
+    override fun updatePokemonFavorite(pokemon: Pokemon, state: Boolean) {
         val pokemonEntities = pokemon.mapDomainToEntity()
-        return localDataSource.updatePokemon(pokemonEntities, state)
+        return localDataSource.updatePokemonFavorite(pokemonEntities, state)
     }
 }

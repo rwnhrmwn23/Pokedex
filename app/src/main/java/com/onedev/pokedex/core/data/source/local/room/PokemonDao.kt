@@ -18,6 +18,9 @@ interface PokemonDao {
     fun getPokemonFavorite(): Flow<List<PokemonEntity>>
 
     @Update
+    fun updatePokemonFavorite(pokemonEntity: PokemonEntity)
+
+    @Update
     suspend fun updatePokemon(pokemonEntity: PokemonEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
