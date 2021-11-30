@@ -1,13 +1,16 @@
 package com.onedev.pokedex.utils
 
 import android.app.Activity
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.onedev.pokedex.R
 
 object ExtSupport {
@@ -43,5 +46,13 @@ object ExtSupport {
 
     fun View.gone() {
         visibility = View.GONE
+    }
+
+    fun Context.showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun View.showSnackBar(message: String) {
+        Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
     }
 }

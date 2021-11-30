@@ -1,37 +1,30 @@
 package com.onedev.pokedex.ui.fragment.detail.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
-import com.google.gson.Gson
+import com.google.android.material.tabs.TabLayoutMediator
 import com.onedev.pokedex.R
-import com.onedev.pokedex.core.data.source.Resource
 import com.onedev.pokedex.core.domain.model.Pokemon
 import com.onedev.pokedex.databinding.FragmentDetailBinding
-import com.onedev.pokedex.ui.fragment.detail.adapter.PokemonTypeAdapter
+import com.onedev.pokedex.ui.fragment.detail.adapter.PokemonDetailViewPagerAdapter
 import com.onedev.pokedex.ui.fragment.detail.viewmodel.DetailViewModel
-import com.onedev.pokedex.ui.fragment.home.viewmodel.HomeViewModel
-import com.onedev.pokedex.utils.ExtSupport.gone
 import com.onedev.pokedex.utils.ExtSupport.hideNavBar
-import com.onedev.pokedex.utils.ExtSupport.visible
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding
     private val args: DetailFragmentArgs by navArgs()
-    private val detailViewModel: DetailViewModel by viewModel()
+    private var mediator: TabLayoutMediator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,67 +70,13 @@ class DetailFragment : Fragment(), View.OnClickListener {
             tvPokemonId.text = getString(R.string.pokemon_id, data.id)
             collPokemonName.title = data.pokemonName
 
-            loadDetailPokemon(data.id)
-        }
-    }
+            val viewPagerDetailHeroAdapter = PokemonDetailViewPagerAdapter(activity as AppCompatActivity, args.pokemon.id.toString())
+            viewPager.adapter = viewPagerDetailHeroAdapter
 
-    private fun loadDetailPokemon(id: Int) {
-        binding?.apply {
-            detailViewModel.getPokemonDetail(id).observe(viewLifecycleOwner) { response ->
-                if (response != null) {
-                    when (response) {
-                        is Resource.Loading -> {
-
-                        }
-                        is Resource.Success -> {
-                            response.data?.let { dataPokemon ->
-                                val dataBaseStat = dataPokemon.stats
-                                val dataStatHp = dataBaseStat[0].base_stat.toFloat()
-                                val dataStatAtk = dataBaseStat[1].base_stat.toFloat()
-                                val dataStatDef = dataBaseStat[2].base_stat.toFloat()
-                                val dataStatSAtk = dataBaseStat[3].base_stat.toFloat()
-                                val dataStatSDef = dataBaseStat[4].base_stat.toFloat()
-                                val dataStatSpd = dataBaseStat[5].base_stat.toFloat()
-
-                                statHp.progress = dataStatHp
-                                statHp.labelText = getString(R.string.stat_base, dataStatHp.toInt())
-
-                                statAttack.progress = dataStatAtk
-                                statAttack.labelText = getString(R.string.stat_base, dataStatAtk.toInt())
-
-                                statDef.progress = dataStatDef
-                                statDef.labelText = getString(R.string.stat_base, dataStatDef.toInt())
-
-                                statSAttack.progress = dataStatSAtk
-                                statSAttack.labelText = getString(R.string.stat_base, dataStatSAtk.toInt())
-
-                                statSDef.progress = dataStatSDef
-                                statSDef.labelText = getString(R.string.stat_base, dataStatSDef.toInt())
-
-                                statSpd.progress = dataStatSpd
-                                statSpd.labelText = getString(R.string.stat_base, dataStatSpd.toInt())
-
-                                tvHeight.text = dataPokemon.height.toString()
-                                tvWeight.text = dataPokemon.weight.toString()
-
-
-                                val pokemonTypeAdapter = PokemonTypeAdapter()
-                                rvType.apply {
-                                    setHasFixedSize(true)
-                                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                                    adapter = pokemonTypeAdapter
-                                }
-                                pokemonTypeAdapter.setTypePokemon(dataPokemon.types)
-
-                                Log.d("dataPokemon", "loadDetailPokemon: ${Gson().toJson(dataPokemon)}")
-                            }
-                        }
-                        is Resource.Error -> {
-
-                        }
-                    }
-                }
-            }
+            mediator = TabLayoutMediator(
+                tabs, viewPager
+            ) { tab, position -> tab.text = resources.getString(TAB_TITLES[position]) }
+            mediator?.attach()
         }
     }
 
@@ -154,5 +93,14 @@ class DetailFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    companion object {
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.appearance,
+            R.string.type,
+            R.string.base_stats
+        )
     }
 }

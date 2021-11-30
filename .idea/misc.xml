@@ -9,8 +9,13 @@
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/drawable/ic_baseline_refresh.xml" value="0.21875" />
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/drawable/ic_error.xml" value="0.37864583333333335" />
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/drawable/ic_loading.xml" value="0.21875" />
+        <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/drawable/rounded_top_border.xml" value="0.37864583333333335" />
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/fragment_detail.xml" value="0.33" />
+        <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/fragment_detail_appearance.xml" value="0.3625" />
+        <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/fragment_detail_appearence.xml" value="0.3625" />
+        <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/fragment_detail_base_stats.xml" value="0.3625" />
+        <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/fragment_detail_type.xml" value="0.3625" />
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/fragment_favorite.xml" value="0.3625" />
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/fragment_home.xml" value="0.3625" />
         <entry key="..\:/IRWAN/Projects/Pokedex/app/src/main/res/layout/layout_list_pokemon.xml" value="0.3625" />
