@@ -22,12 +22,14 @@ import com.onedev.pokedex.utils.ExtSupport.showNavBar
 import com.onedev.pokedex.utils.ExtSupport.showToast
 import java.util.*
 import kotlin.collections.ArrayList
+import com.miguelcatalan.materialsearchview.MaterialSearchView
+import org.koin.android.ext.android.bind
+
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
     private val homeViewModel: HomeViewModel by viewModel()
-    private lateinit var mDataPokemon: ArrayList<Pokemon>
     private lateinit var pokemonAdapter: PokemonAdapter
 
     companion object {
@@ -60,6 +62,17 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding?.searchView?.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                if (query.isNotEmpty()) loadPokemonByName(query) else loadPokemon()
+                return true
+            }
+        })
+
         loadPokemon()
     }
 
@@ -71,24 +84,8 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_search, menu)
 
-        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.menu_search).actionView as SearchView
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
-        searchView.queryHint = resources.getString(R.string.search_pokemon)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(query: String): Boolean {
-                if (query.isNotEmpty())
-                    loadPokemonByName(query)
-                else
-                    loadPokemon()
-                return false
-            }
-        })
+        val item = menu.findItem(R.id.menu_search)
+        binding?.searchView?.setMenuItem(item)
     }
 
     private fun loadPokemon() {

@@ -73,6 +73,8 @@ class DetailFragment : Fragment(), View.OnClickListener {
                             if (rgb != null) {
                                 appbar.setBackgroundColor(rgb)
                                 collPokemonName.setContentScrimColor(rgb)
+                                tabs.setTabTextColors(R.color.colorPrimary, rgb)
+                                tabs.setSelectedTabIndicatorColor(rgb)
                                 requireActivity().window.statusBarColor = rgb
                             }
                         }.crossfade(true)
