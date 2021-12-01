@@ -14,8 +14,11 @@ import com.onedev.pokedex.ui.fragment.favorite.viewmodel.FavoriteViewModel
 import com.onedev.pokedex.ui.fragment.home.viewmodel.HomeViewModel
 import com.onedev.pokedex.utils.Constant.BASE_URL
 import com.onedev.pokedex.utils.Constant.DATABASE_NAME
+import com.onedev.pokedex.utils.Constant.DATABASE_PASSWORD
 import com.onedev.pokedex.utils.Constant.HOSTNAME
 import com.onedev.pokedex.utils.Constant.HOSTNAME_PINS1
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
@@ -28,8 +31,11 @@ import java.util.concurrent.TimeUnit
 val databaseModule = module {
     factory { get<PokemonDatabase>().pokemonDao() }
     single {
+        val passphrase: ByteArray = SQLiteDatabase.getBytes(DATABASE_PASSWORD.toCharArray())
+        val factory = SupportFactory(passphrase)
         Room.databaseBuilder(androidContext(), PokemonDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
             .build()
     }
 }

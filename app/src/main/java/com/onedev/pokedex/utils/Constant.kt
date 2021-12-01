@@ -8,5 +8,6 @@ object Constant {
     const val HOSTNAME = BuildConfig.HOSTNAME
     const val HOSTNAME_PINS1 = BuildConfig.HOSTNAME_PINS1
     const val DATABASE_NAME = BuildConfig.DATABASE_NAME
+    const val DATABASE_PASSWORD = BuildConfig.DATABASE_PASSWORD
 
 }

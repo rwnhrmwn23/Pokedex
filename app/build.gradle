@@ -23,6 +23,7 @@ android {
         buildConfigField "String", "HOSTNAME", '"pokeapi.co"'
         buildConfigField "String", "HOSTNAME_PINS1", '"sha256/LKrkQXV+1z40vOH0UYLCdaAfe8dWnKoqbe1dmjGtClk="'
         buildConfigField "String", "DATABASE_NAME", '"Pokemon.db"'
+        buildConfigField "String", "DATABASE_PASSWORD", '"8*%fKr@x@pWa@BGL"'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -100,6 +101,10 @@ dependencies {
 
     // Timber
     implementation "com.jakewharton.timber:timber:5.0.0"
+
+    // Cipher
+    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+    implementation "androidx.sqlite:sqlite-ktx:2.1.0"
 
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:29.0.0')
