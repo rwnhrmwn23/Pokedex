@@ -14,11 +14,16 @@ import com.onedev.pokedex.ui.fragment.favorite.viewmodel.FavoriteViewModel
 import com.onedev.pokedex.ui.fragment.home.viewmodel.HomeViewModel
 import com.onedev.pokedex.utils.Constant.BASE_URL
 import com.onedev.pokedex.utils.Constant.DATABASE_NAME
+import com.onedev.pokedex.utils.Constant.HOSTNAME
+import com.onedev.pokedex.utils.Constant.HOSTNAME_PINS1
+import okhttp3.CertificatePinner
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 val databaseModule = module {
     factory { get<PokemonDatabase>().pokemonDao() }
@@ -31,9 +36,22 @@ val databaseModule = module {
 
 val networkModule = module {
     single {
+        val hostname = HOSTNAME
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, HOSTNAME_PINS1)
+            .build()
+        OkHttpClient.Builder()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .certificatePinner(certificatePinner)
+            .build()
+    }
+    single {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(get())
             .build()
         retrofit.create(ApiService::class.java)
     }

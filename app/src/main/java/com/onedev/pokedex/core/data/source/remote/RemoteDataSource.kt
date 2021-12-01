@@ -1,6 +1,5 @@
 package com.onedev.pokedex.core.data.source.remote
 
-import android.util.Log
 import com.onedev.pokedex.core.data.source.remote.network.ApiResponse
 import com.onedev.pokedex.core.data.source.remote.network.ApiService
 import com.onedev.pokedex.core.data.source.remote.response.DataPokemon
@@ -9,10 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.lang.Exception
+import timber.log.Timber
 
 class RemoteDataSource(private val apiService: ApiService) {
-
     suspend fun getListPokemon(limit: Int): Flow<ApiResponse<List<DataPokemon>>> {
         return flow {
             try {
@@ -24,7 +22,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                     emit(ApiResponse.Error("Something When Wrong..."))
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
-                Log.e(TAG, "getListPokemon: $e")
+                Timber.e("getListPokemon: $e")
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -36,13 +34,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
-                Log.e(TAG, "getDetailPokemon: $e")
+                Timber.e("getDetailPokemon: $e")
             }
         }.flowOn(Dispatchers.IO)
     }
-
-    companion object {
-        private const val TAG = "RemoteDataSource"
-    }
-
 }

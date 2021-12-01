@@ -7,13 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.onedev.pokedex.R
-import com.onedev.pokedex.core.data.source.Resource
 import com.onedev.pokedex.databinding.FragmentFavoriteBinding
 import com.onedev.pokedex.ui.fragment.favorite.viewmodel.FavoriteViewModel
 import com.onedev.pokedex.ui.fragment.home.adapter.PokemonAdapter
-import com.onedev.pokedex.ui.fragment.home.fragment.HomeFragment
-import com.onedev.pokedex.ui.fragment.home.fragment.HomeFragmentDirections
 import com.onedev.pokedex.utils.ExtSupport.gone
 import com.onedev.pokedex.utils.ExtSupport.showNavBar
 import com.onedev.pokedex.utils.ExtSupport.visible

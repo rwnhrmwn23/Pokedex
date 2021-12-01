@@ -11,12 +11,10 @@ import com.onedev.pokedex.core.data.source.remote.response.PokemonDetailsRespons
 import com.onedev.pokedex.core.domain.model.Pokemon
 import com.onedev.pokedex.core.domain.repository.IPokemonRepository
 import com.onedev.pokedex.utils.ExtMapper.mapDomainToEntity
-import com.onedev.pokedex.utils.ExtMapper.mapEntitiesToListDomain
 import com.onedev.pokedex.utils.ExtMapper.mapEntityToDomain
 import com.onedev.pokedex.utils.ExtMapper.mapResponsesDetailToEntities
 import com.onedev.pokedex.utils.ExtMapper.mapResponsesToEntities
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class PokemonRepository(

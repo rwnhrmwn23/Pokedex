@@ -116,7 +116,6 @@ class HomeFragment : Fragment() {
                             shimmerViewContainer.stopShimmer()
                             shimmerViewContainer.gone()
                             rvPokemon.gone()
-                            layoutPokemonNotFound.tvNoPokemon.text = response.message ?: getString(R.string.pokemon_not_found)
                         }
                     }
                 }
