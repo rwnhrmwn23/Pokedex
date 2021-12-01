@@ -1,17 +1,13 @@
 package com.onedev.pokedex.ui.fragment.home.fragment
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.onedev.pokedex.R
 import com.onedev.pokedex.core.data.source.Resource
-import com.onedev.pokedex.core.domain.model.Pokemon
 import com.onedev.pokedex.databinding.FragmentHomeBinding
 import com.onedev.pokedex.ui.fragment.home.adapter.PokemonAdapter
 import com.onedev.pokedex.ui.fragment.home.viewmodel.HomeViewModel
@@ -19,11 +15,7 @@ import com.onedev.pokedex.utils.ExtSupport.gone
 import com.onedev.pokedex.utils.ExtSupport.visible
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.onedev.pokedex.utils.ExtSupport.showNavBar
-import com.onedev.pokedex.utils.ExtSupport.showToast
-import java.util.*
-import kotlin.collections.ArrayList
 import com.miguelcatalan.materialsearchview.MaterialSearchView
-import org.koin.android.ext.android.bind
 
 
 class HomeFragment : Fragment() {
